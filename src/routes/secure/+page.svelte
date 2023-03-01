@@ -4,7 +4,7 @@
 	export let data: PageData;
 </script>
 
-<div class="+page">{data.props} {data.abc}</div>
+<div class="+page">Secure route {data.a} {data.user}</div>
 
 <style>
 </style>
