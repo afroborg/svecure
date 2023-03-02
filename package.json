@@ -1,7 +1,7 @@
 {
 	"name": "svecure",
 	"version": "0.0.1",
-	"private": true,
+	"private": false,
 	"license": "MIT",
 	"author": {
 		"name": "Axel Froborg",
