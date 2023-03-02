@@ -4,7 +4,9 @@
 	export let data: PageData;
 </script>
 
-<div class="+page">Secure route {data.a} {data.user}</div>
+<div>
+	{data.message}
+</div>
 
-<style>
+<style lang="pcss">
 </style>

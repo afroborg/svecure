@@ -1,38 +1,86 @@
-# create-svelte
+# 🔐 Svecure - Secure your load functions
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+Secure your load functions with wrappers that will handle errorchecking for you.
 
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
+## Installation
 
 ```bash
-# create a new project in the current directory
-npm create svelte@latest
+npm install svecure
 
-# create a new project in my-app
-npm create svelte@latest my-app
+# or yarn
+yarn add svecure
+
+# or pnpm
+pnpm add svecure
 ```
 
-## Developing
+## Usage
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+```ts
+// +(page|layout).ts
 
-```bash
-npm run dev
+import { createLoadVerifier } from 'svecure';
+import { PageLoad } from './$types';
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+const withVerification = createLoadVerifier<PageLoad>(() => {
+	// ...your verification logic
+	return true;
+});
+
+export const load = withVerification(() => {
+	return {
+		// ...your data
+	};
+});
 ```
 
-## Building
+```ts
+// +(page|layout).server.ts
 
-To create a production version of your app:
+import { createLoadVerifier } from 'svecure';
+import { PageServerLoad } from './$types';
 
-```bash
-npm run build
+const withVerification = createLoadVerifier<PageServerLoad>(() => {
+	// ...your verification logic
+	return true;
+});
+
+export const load = withVerification(() => {
+	return {
+		// ...your data
+	};
+});
 ```
 
-You can preview the production build with `npm run preview`.
+### Custom error messages
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+If the verification fails, the load functino will by default throw a SvelteKit [`error`](https://kit.svelte.dev/docs/modules#sveltejs-kit-error) with a status of `401` and a message of `Unauthorized`. You can customize this by passing a second argument to `createLoadVerifier`:
+
+```ts
+const withVerification = createLoadVerifier<PageLoad>(
+	() => {
+		// ...your verification logic
+		return false;
+	},
+	{
+		status: 403,
+		message: 'You are not allowed to access this page'
+	}
+);
+```
+
+Or with a custom function (if you for example need to redirect to a login page):
+
+```ts
+import { redirect } from '@sveltejs/kit';
+
+const withVerification = createLoadVerifier<PageLoad>(
+	() => {
+		// ...your verification logic
+		return false;
+	},
+	() => {
+		throw redirect(302, '/login');
+	}
+);
+```

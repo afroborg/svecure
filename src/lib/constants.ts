@@ -1,4 +1,6 @@
-export const DEFAULT_VERIFY_OPTIONS = {
-	errorStatus: 401,
-	errorMessage: 'Unauthorized'
-};
+import type { FailHandler } from './models/verify.js';
+
+export const FAIL_DEFAULTS = {
+	status: 401,
+	message: 'Unauthorized'
+} satisfies FailHandler;

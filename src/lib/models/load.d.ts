@@ -26,8 +26,3 @@ export type LoadCallback<T, R> = ClientOrServer<
 	ClientLoadCallback<T, R>,
 	ServerLoadCallback<T, R>
 >;
-
-export type VerifyOptions = {
-	errorStatus?: number;
-	errorMessage?: string;
-};

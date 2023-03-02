@@ -1,14 +1,14 @@
-import { createLoadVerifier } from '$lib/handlers/auth';
+import { createLoadVerifier } from '$lib';
 import type { PageLoad } from './$types';
 
-const withUsername = createLoadVerifier<PageLoad>(async ({ parent }) => {
-	const data = await parent();
-	return data.user;
+const withPassword = createLoadVerifier<PageLoad>(({ url }) => {
+	const password = url.searchParams.get('password');
+
+	return password === 'test';
 });
 
-export const load = withUsername(() => {
+export const load = withPassword(async () => {
 	return {
-		a: 1,
-		b: 'strig'
+		message: 'The correct message was provided'
 	};
 });

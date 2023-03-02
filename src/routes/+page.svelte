@@ -4,7 +4,10 @@
 	export let data: PageData;
 </script>
 
-<div class="+page">{data.props} {data.abc}</div>
+<div class="+page">Homepage</div>
+<div data-user>
+	{JSON.stringify(data, null, 2)}
+</div>
 
-<style>
+<style lang="pcss">
 </style>
