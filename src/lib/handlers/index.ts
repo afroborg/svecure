@@ -1,1 +1,1 @@
-export { createLoadVerifier, createServerLoadVerifier } from './auth';
+export { createLoadVerifier } from './auth';

@@ -8,6 +8,7 @@ const withUsername = createLoadVerifier<PageLoad>(async ({ parent }) => {
 
 export const load = withUsername(() => {
 	return {
-		a: 1
+		a: 1,
+		b: 'strig'
 	};
 });

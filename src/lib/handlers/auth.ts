@@ -1,13 +1,6 @@
 import { DEFAULT_VERIFY_OPTIONS } from '$lib/constants';
-import type {
-	Load,
-	LoadCallback,
-	ServerLoad,
-	ServerVerifyHandler,
-	VerifyHandler,
-	VerifyOptions
-} from '$lib/models/load';
-import type { UnknownObject } from '$lib/models/utils';
+import type { LoadCallback, VerifyHandler, VerifyOptions } from '$lib/models/load';
+import type { UnknownFunction, UnknownObject } from '$lib/models/utils';
 import { error } from '@sveltejs/kit';
 
 const getOptions = (opts: VerifyOptions = {}) => {
@@ -19,15 +12,14 @@ const getOptions = (opts: VerifyOptions = {}) => {
 	return { errorStatus, errorMessage };
 };
 
-export const createLoadVerifier = <T extends Load>(
+export const createLoadVerifier = <T extends UnknownFunction>(
 	verify: VerifyHandler<T>,
-	opts: VerifyOptions = {}
+	opts?: VerifyOptions
 ) => {
 	const { errorStatus, errorMessage } = getOptions(opts);
 
-	const load =
-		<R extends UnknownObject>(cb: LoadCallback<T, R>) =>
-		async (...params: Parameters<T>) => {
+	const loadWrapperFunc = <R extends UnknownObject>(cb: LoadCallback<T, R>) => {
+		const load = async (...params: Parameters<T>) => {
 			const verified = await verify(...params);
 
 			if (!verified) {
@@ -37,24 +29,8 @@ export const createLoadVerifier = <T extends Load>(
 			return cb(...params);
 		};
 
-	return load;
-};
-
-export const createServerLoadVerifier = <T extends ServerLoad>(
-	verify: ServerVerifyHandler<T>,
-	opts: VerifyOptions = {}
-) => {
-	const { errorStatus, errorMessage } = getOptions(opts);
-
-	return <R extends UnknownObject>(cb: LoadCallback<T, R>) => {
-		return async (...params: Parameters<T>) => {
-			const verified = await verify(...params);
-
-			if (!verified) {
-				throw error(errorStatus, errorMessage);
-			}
-
-			return cb(...params);
-		};
+		return load;
 	};
+
+	return loadWrapperFunc;
 };

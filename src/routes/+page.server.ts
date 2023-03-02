@@ -1,7 +1,7 @@
-import { createServerLoadVerifier } from '$lib/handlers/auth';
+import { createLoadVerifier } from '$lib/handlers/auth';
 import type { PageServerLoad } from './$types';
 
-const verifier = createServerLoadVerifier<PageServerLoad>(() => {
+const verifier = createLoadVerifier<PageServerLoad>(() => {
 	return true;
 });
 
