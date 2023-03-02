@@ -8,6 +8,16 @@
 		"email": "axel.froborg@gmail.com",
 		"url": "https://axel.froborg.com"
 	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/afroborg/svecure"
+	},
+	"keywords": [
+		"svelte",
+		"sveltekit",
+		"load",
+		"data-fetching"
+	],
 	"files": [
 		"dist"
 	],
@@ -33,6 +43,7 @@
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.9.3",
+		"@sveltejs/package": "^2.0.2",
 		"@typescript-eslint/eslint-plugin": "^5.54.0",
 		"@typescript-eslint/parser": "^5.54.0",
 		"eslint": "^8.35.0",
@@ -47,8 +58,5 @@
 		"vite": "^4.1.4",
 		"vitest": "^0.29.2"
 	},
-	"type": "module",
-	"dependencies": {
-		"@sveltejs/package": "^2.0.2"
-	}
+	"type": "module"
 }
