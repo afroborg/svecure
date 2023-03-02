@@ -1,2 +1,2 @@
-export * from './handlers';
-export { FAIL_DEFAULTS } from './constants.js';
+export * from '$lib/handlers';
+export { FAIL_DEFAULTS } from '$lib/constants';

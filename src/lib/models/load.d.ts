@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Load as SkLoad, ServerLoad as SkServerLoad } from '@sveltejs/kit';
-import type { Promiseish } from './utils';
+import type { Promiseish } from '$lib/models/utils';
 
 type Load = SkLoad<any, any, any, any, any>;
 type ServerLoad = SkServerLoad<any, any, any, any>;

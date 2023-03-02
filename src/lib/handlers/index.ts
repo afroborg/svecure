@@ -1,1 +1,1 @@
-export { createLoadVerifier } from './verify.js';
+export { createLoadVerifier } from '$lib/handlers/verify';

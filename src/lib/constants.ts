@@ -1,4 +1,4 @@
-import type { FailHandler } from './models/verify.js';
+import type { FailHandler } from '$lib/models/verify';
 
 export const FAIL_DEFAULTS = {
 	status: 401,
