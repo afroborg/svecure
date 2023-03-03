@@ -1,5 +1,5 @@
 import { FAIL_DEFAULTS } from '$lib/constants';
-import type { LoadCallback, VerifyHandler } from '$lib/models/load';
+import type { Load, LoadCallback, VerifyHandler } from '$lib/models/load';
 import type { UnknownFunction, UnknownObject } from '$lib/models/utils';
 import type { FailHandler } from '$lib/models/verify';
 import { error } from '@sveltejs/kit';
@@ -14,12 +14,12 @@ export const fail = (handler: FailHandler = FAIL_DEFAULTS) => {
 	throw error(status, message);
 };
 
-export const createLoadVerifier = <T extends UnknownFunction>(
+export const createLoadVerifier = <T extends UnknownFunction = Load>(
 	verify: VerifyHandler<T>,
 	failHandler?: FailHandler
 ) => {
-	const loadWrapperFunc = <R extends UnknownObject>(cb: LoadCallback<T, R>) => {
-		const load = async (...params: Parameters<T>) => {
+	const loadWrapperFunc = <T2 extends T, R extends UnknownObject>(cb: LoadCallback<T2, R>) => {
+		const load = async (...params: Parameters<T2>) => {
 			const verified = await verify(...params);
 
 			if (!verified) {
